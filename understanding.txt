@@ -1,0 +1,86 @@
+Document Processor Application Code Explanation
+Table of Contents
+Overview
+Module Structure
+DocumentProcessor Class
+Initialization
+Load and Embed Documents
+Get Uploaded Documents
+Document Processing
+Extract Text
+Chunking
+Embedding Generation
+Example Usage
+Conclusion
+Overview
+The Document Processor Application allows users to upload PDF documents, which are then processed to extract text content. The extracted content is chunked into smaller segments, embeddings are generated using a specified language model, and stored for efficient searching.
+
+Module Structure
+The primary module for this application is document_processor.py. This module contains the core functionality for document handling, text extraction, chunking, and embedding generation.
+
+DocumentProcessor Class
+The DocumentProcessor class is the main component of the application that orchestrates the processing steps for uploaded documents.
+
+Initialization
+Copy Code
+class DocumentProcessor:
+    def __init__(self, target_folder: str):
+        self.target_folder = target_folder
+        self.documents = []
+In the __init__ method:
+
+target_folder specifies the directory where processed documents will be stored.
+documents is a list to hold the extracted content from PDF files.
+Load and Embed Documents
+Copy Code
+def load_and_embed_documents(self, uploaded_files: List[io.BytesIO]):
+    for file in uploaded_files:
+        text = self.extract_text(file)
+        chunks = self.chunk_text(text)
+        embeddings = self.generate_embeddings(chunks)
+        self.documents.extend(embeddings)
+In this method:
+
+It iterates over a list of uploaded PDF files.
+For each file, it extracts the text, chunks it, generates embeddings, and appends them to the documents list.
+Document Processing
+Extract Text
+Copy Code
+def extract_text(self, pdf_file: io.BytesIO) -> str:
+    # [Implementation code to extract text from PDF]
+This method takes a PDF file as input and extracts the text using a suitable library (e.g., PyPDF2, pdfminer).
+Chunking
+Copy Code
+def chunk_text(self, text: str) -> List[str]:
+    # [Implementation code to split text into chunks]
+This method splits the extracted text into smaller, manageable chunks to ensure better embedding generation and searching efficiency.
+Embedding Generation
+Copy Code
+def generate_embeddings(self, chunks: List[str]) -> List[EmbeddingObject]:
+    # [Implementation code to generate embeddings]
+This method generates embeddings for each text chunk using a specified language model, such as one provided by OpenAI or another library. The embeddings enable semantic searching through the content.
+Example Usage
+Here’s a simplified usage example of the DocumentProcessor class:
+
+Copy Code
+import os
+import io
+from typing import List
+from document_processor import DocumentProcessor
+
+# Initialize the DocumentProcessor
+processor = DocumentProcessor(target_folder="./docs/")
+
+# Example of processing uploaded PDF files
+uploaded_files = [...]  # List of io.BytesIO objects containing PDF file contents
+processor.load_and_embed_documents(uploaded_files)
+
+# Get uploaded documents
+documents = processor.get_uploaded_documents()
+print(documents)
+Explanation
+The example imports necessary libraries and initializes an instance of the DocumentProcessor.
+It demonstrates the process of loading and embedding documents from a list of uploaded.
+Finally, it retrieves the processed documents for further use or searching.
+Conclusion
+This document summarizes the key functionalities of the Document Processor Application's code. The application effectively handles PDF uploads, text extraction, chunking, and embedding generation, making it a valuable tool for document search and retrieval tasks.
